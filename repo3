@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+         stage('checkout') {
+            steps {
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/lucianopereira86/Python-HelloWorld.git']])
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'python3 helloworld.py'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'python3 helloworld.py'
+            }
+        }
+        stage('coonect to server') {
+          steps {
+            sshagent(['ssh_keydev']) {
+             sh '''#!/bin/bash
+                ssh -o StrictHostKeyChecking=no azureuser@172.188.42.27 << EOF
+                ls -ltra
+                <<EOF'''
+              }
+          }
+        }
+        
+    }
+}
