@@ -5,9 +5,10 @@ pipeline {
           steps{
             sshagent(credentials : ['azure-cred']) {
               sh '''#!/bin/bash
-                 ssh -o StrictHostKeyChecking=no azureuser@20.212.226.181 << EOF
+                 ssh -o StrictHostKeyChecking=no azureuser@172.188.42.27 << EOF
                  sudo su - odoo
-                 git pull "https://purusothamans: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@github.com/ajoebert/odoo_dev.git"
+                 git pull 
+"https://purusothamans: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@github.com/ajoebert/odoo_dev.git"
                  sudo service odoo15 restart
                  sudo service fastapi restart
                  sudo service postgresql restart
@@ -19,7 +20,7 @@ pipeline {
           steps{
             sshagent(credentials : ['azure-cred']) {
               sh '''#!/bin/bash
-                 ssh -o StrictHostKeyChecking=no azureuser@20.212.226.181 << EOF
+                 ssh -o StrictHostKeyChecking=no azureuser@172.188.42.27 << EOF
                  sudo service odoo15 restart
                  sudo service fastapi restart
                  sudo service postgresql restart
